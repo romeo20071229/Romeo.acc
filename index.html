@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en" id="html-tag">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Romeo - Link in Bio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        :root {
+            --bg-primary: #000000;
+            --bg-card: #1a1b26;
+            --bg-card-hover: #222336;
+            --bg-card-active: #161722;
+            --text-primary: #ffffff;
+            --text-secondary: #c0c0c0;
+            --text-muted: #6e7082;
+            --accent: #1414b8;
+            --accent-light: #1e1ed4;
+            --accent-glow: rgba(20, 20, 184, 0.4);
+            --border-subtle: rgba(255, 255, 255, 0.06);
+            --border-hover: rgba(255, 255, 255, 0.12);
+            --shadow-glow: 0 0 40px rgba(20, 20, 184, 0.15);
+            --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.4);
+            --font-display: 'Space Grotesk', sans-serif;
+            --font-body: 'Plus Jakarta Sans', sans-serif;
+            --font-arabic: 'Cairo', sans-serif;
+        }
+
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+          
+#top-accounts {
+    display: flex;
+    flex-direction: column;
+    gap: 12px; /* يمكنك زيادة أو تقليل الرقم لضبط المسافة كما تفضل */
+}
+
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-image:
+                radial-gradient(ellipse 80% 60% at 50% -10%, rgba(20, 20, 184, 0.12) 0%, transparent 60%),
+                radial-gradient(ellipse 50% 40% at 80% 80%, rgba(20, 20, 184, 0.06) 0%, transparent 50%);
+            background-attachment: fixed;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        /* Arabic Support */
+        body.rtl {
+            font-family: var(--font-arabic);
+            direction: rtl;
+        }
+        body.rtl .profile__name, body.rtl .section-title {
+            font-family: var(--font-arabic);
+        }
+
+        .top-bar {
+            width: 100%;
+            max-width: 480px;
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 10px;
+        }
+
+        .lang-btn {
+            background: var(--bg-card);
+            color: var(--text-primary);
+            border: 1px solid var(--border-subtle);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .lang-btn:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 480px;
+        }
+
+        .profile, .social-section, .contact-section, .footer {
+            animation: fadeInUp 0.7s ease-out both;
+        }
+        .social-section { animation-delay: 0.15s; }
+        .contact-section { animation-delay: 0.3s; }
+        .footer { animation-delay: 0.45s; }
+
+        .profile { text-align: center; margin-bottom: 32px; }
+
+        .profile__avatar-wrapper {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .profile__avatar {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--border-subtle);
+            box-shadow: 0 0 30px rgba(20, 20, 184, 0.2), 0 0 60px rgba(20, 20, 184, 0.08);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background-color: #fff;
+        }
+
+        .profile__avatar:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 40px rgba(20, 20, 184, 0.35), 0 0 80px rgba(20, 20, 184, 0.15);
+            border-color: rgba(20, 20, 184, 0.5);
+        }
+
+        .profile__status {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            width: 18px;
+            height: 18px;
+            background: #22c55e;
+            border: 3px solid var(--bg-primary);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        .profile__name {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .profile__verified {
+            color: var(--accent);
+            font-size: 1.1rem;
+            margin-left: 4px;
+            margin-right: 4px;
+            vertical-align: middle;
+        }
+
+        .profile__bio {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            max-width: 320px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .social-section { margin-bottom: 32px; }
+        .social-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+
+        .social-link, .contact-item, .instapay-card {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 20px;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .social-link:hover, .contact-item:hover, .instapay-card:hover {
+            background-color: var(--bg-card-hover);
+            border-color: var(--border-hover);
+            transform: translateY(-3px);
+        }
+
+        .social-link__icon, .contact-item__icon, .instapay-card__icon {
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+        }
+
+        .social-link__icon--facebook { background: rgba(24, 119, 242, 0.12); color: #1877f2; }
+        .social-link__icon--whatsapp { background: rgba(37, 211, 102, 0.12); color: #25d366; }
+        .social-link__icon--telegram { background: rgba(36, 161, 222, 0.12); color: #24a1de; }
+        .social-link__icon--instagram { background: rgba(225, 48, 108, 0.12); color: #e1306c; }
+        .social-link__icon--tiktok { background: rgba(255, 255, 255, 0.08); color: #ffffff; }
+        .social-link__icon--twitter { background: rgba(239, 243, 244, 0.08); color: #ffffff; }
+        
+        .contact-item__icon, .instapay-card__icon {
+            background: rgba(20, 20, 184, 0.1); color: var(--accent);
+        }
+
+        .social-link__text { flex: 1; }
+        .social-link__arrow, .instapay-card__arrow {
+            color: var(--text-muted); opacity: 0; transition: all 0.3s ease;
+        }
+        body:not(.rtl) .social-link__arrow { transform: translateX(-4px); }
+        body.rtl .social-link__arrow { transform: translateX(4px); }
+        
+        .social-link:hover .social-link__arrow, .instapay-card:hover .instapay-card__arrow {
+            opacity: 1; transform: translateX(0);
+        }
+
+        .contact-section { margin-bottom: 32px; }
+        .contact-list { display: flex; flex-direction: column; gap: 10px; }
+        .contact-item__info, .instapay-card__info { flex: 1; min-width: 0; }
+        .contact-item__label, .instapay-card__label {
+            font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); margin-bottom: 3px;
+        }
+        .contact-item__value, .instapay-card__value {
+            font-family: var(--font-display); font-size: 0.95rem; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+
+        .copy-btn {
+            display: flex; align-items: center; gap: 6px; padding: 8px 16px;
+            background: transparent; border: 1px solid var(--border-subtle); border-radius: 10px;
+            color: var(--text-muted); font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease;
+        }
+        .copy-btn:hover { background: rgba(20, 20, 184, 0.1); border-color: rgba(20, 20, 184, 0.3); color: var(--text-primary); }
+        .copy-btn--copied { background: rgba(34, 197, 94, 0.12) !important; border-color: rgba(34, 197, 94, 0.3) !important; color: #22c55e !important; }
+
+        .footer { text-align: center; padding-top: 8px; padding-bottom: 20px;}
+        .footer__text { font-size: 0.75rem; color: var(--text-muted); letter-spacing: 1px; }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); }
+            50% { box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
+        }
+
+        @media (max-width: 480px) {
+            .social-grid { grid-template-columns: 1fr; }
+            .profile__avatar { width: 120px; height: 120px; }
+            .profile__name { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <button id="langToggleBtn" class="lang-btn">العربية</button>
+    </div>
+
+    <div class="container">
+        <section class="profile">
+            <div class="profile__avatar-wrapper">
+                <img src="{{ url_for('static', filename='1000116397.png') }}" alt="Romeo profile picture" class="profile__avatar">
+                <span class="profile__status" aria-label="Online"></span>
+            </div>
+            <h1 class="profile__name" data-i18n="name">
+                Ramadan Gamal Hammad  ( Romeo )
+                <i class="fas fa-circle-check profile__verified" title="Verified"></i>
+            </h1>
+            <p class="profile__bio" data-i18n="bio">
+                Digital creator & tech enthusiast. Building the future, Let's connect!
+            </p>
+        </section>
+
+        <section class="social-section">
+            <h2 class="section-title" data-i18n="connect">Connect</h2>
+            <div class="social-grid">
+           <div id="top-accounts">
+
+                <a href="https://www.facebook.com/share/1CRMdLRcei/" target="_blank" class="social-link">
+                    <span class="social-link__icon social-link__icon--facebook"><i class="fab fa-facebook-f"></i></span>
+                    <span class="social-link__text" data-i18n="facebook">Facebook</span>
+                    <i class="fas fa-arrow-up-right-from-square social-link__arrow"></i>
+                </a>
+                <a href="https://wa.me/+201288614301" target="_blank" class="social-link">
+                    <span class="social-link__icon social-link__icon--whatsapp"><i class="fab fa-whatsapp"></i></span>
+                    <span class="social-link__text" data-i18n="whatsapp">WhatsApp</span>
+                    <i class="fas fa-arrow-up-right-from-square social-link__arrow"></i>
+                </a>
+                <a href="https://t.me/romeo1_2007" target="_blank" class="social-link">
+                    <span class="social-link__icon social-link__icon--telegram"><i class="fab fa-telegram-plane"></i></span>
+                    <span class="social-link__text" data-i18n="telegram2">Telegram </span>
+                    <i class="fas fa-arrow-up-right-from-square social-link__arrow"></i>
+                </a>
+                <a href="https://www.instagram.com/romeo1_2007" target="_blank" class="social-link">
+                    <span class="social-link__icon social-link__icon--instagram"><i class="fab fa-instagram"></i></span>
+                    <span class="social-link__text" data-i18n="instagram">Instagram</span>
+                    <i class="fas fa-arrow-up-right-from-square social-link__arrow"></i>
+                </a>
+                <a href="https://www.tiktok.com/@romeo1_2007" target="_blank" class="social-link">
+                    <span class="social-link__icon social-link__icon--tiktok"><i class="fab fa-tiktok"></i></span>
+                    <span class="social-link__text" data-i18n="tiktok">TikTok</span>
+                    <i class="fas fa-arrow-up-right-from-square social-link__arrow"></i>
+                </a>
+                <a href="https://x.com/romeo1_2007" target="_blank" class="social-link">
+                    <span class="social-link__icon social-link__icon--twitter"><i class="fab fa-x-twitter"></i></span>
+                    <span class="social-link__text" data-i18n="twitter">X (Twitter)</span>
+                    <i class="fas fa-arrow-up-right-from-square social-link__arrow"></i>
+                </a>
+<a href="mailto:ramadangamal208@gmail.com" class="contact-item">
+    <div class="contact-item_icon"><i class="fas fa-envelope"></i></div>
+    <div class="contact-item_info">
+        <div class="contact-item__label" data-i18n="email">Email</div>
+        <div class="contact-item__value">ramadangamal208@gmail.com</div>
+    </div>
+    <i class="fas fa-arrow-up-right-from-square social-link__arrow"></i>
+</a>
+
+            </div>
+        </section>
+
+        <section class="contact-section">
+            <h2 class="section-title" data-i18n="phone">phone number</h2>
+            <div class="contact-list">
+                <div class="contact-item">
+                    <div class="contact-item__icon"><i class="fas fa-phone"></i></div>
+                    <div class="contact-item__info">
+                        <div class="contact-item__label" data-i18n="phone">Phone</div>
+                        <div class="contact-item__value" id="phone-value">+201288614301</div>
+                    </div>
+                    <button class="copy-btn" data-copy-target="phone-value">
+                        <i class="fas fa-copy"></i> <span class="copy-btn__text" data-i18n="copy">Copy</span>
+                    </button>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-item__icon"><i class="fas fa-phone"></i></div>
+                    <div class="contact-item__info">
+                        <div class="contact-item__label" data-i18n="phone2">Phone 2</div>
+                        <div class="contact-item__value" id="phone2-value">+201554948244</div>
+                    </div>
+                    <button class="copy-btn" data-copy-target="phone2-value">
+                        <i class="fas fa-copy"></i> <span class="copy-btn__text" data-i18n="copy">Copy</span>
+                </a>
+
+
+            </div>
+        </section>
+        <section class="contact-section">
+            <h2 class="section-title" data-i18n="payment">Payment Method</h2>
+            
+            <div class="contact-list"> 
+
+                <div class="contact-item">
+                    <div class="contact-item__icon"><i class="fas fa-wallet"></i></div>
+                    <div class="contact-item__info">
+                        <div class="contact-item__label" data-i18n="orange_cash">Orange Cash</div>
+                        <div class="contact-item__value" id="wallet-value">01288614301</div>
+                    </div>
+                    <button class="copy-btn" data-copy-target="wallet-value">
+                        <i class="fas fa-copy"></i> <span class="copy-btn__text" data-i18n="copy">Copy</span>
+                    </button>
+                </div>
+                   <div class="contact-item">
+                   <div class="instapay-card__icon">
+                  <i class="fas fa-credit-card"></i>
+                </div>
+                   <div class="instapay-card__info">
+                   <div class="instapay-card__label" data-i18n="instapay">InstaPay</div>
+                   <div class="instapay-card__value" id="instapay-value">01554948244</div>
+                   </div>
+    
+                   <button class="copy-btn" data-copy-target="instapay-value">
+                   <i class="fas fa-copy"></i> 
+                   <span class="copy-btn__text" data-i18n="copy">Copy</span>
+                   </button>
+                  </div>
+
+
+                <div class="contact-item">
+                    <div class="contact-item__icon"><i class="fab fa-btc"></i></div>
+                    <div class="contact-item__info">
+                        <div class="contact-item__label">BINANCE ID</div>
+                        <div class="contact-item__value" id="binance-value">1199995198</div>
+                    </div>
+                    <button class="copy-btn" data-copy-target="binance-value">
+                        <i class="fas fa-copy"></i> <span class="copy-btn__text" data-i18n="copy">Copy</span>
+                    </button>
+                </div>
+                 <div class="contact-item">
+    <div class="contact-item__icon"><i class="fas fa-university"></i></div>
+    <div class="contact-item__info">
+        <div class="contact-item__label" data-i18n="mashreq_egp">Mashreq Bank (EGP)</div>
+        <div class="contact-item__value" id="iban-egp-value">EG030046020200000059101591334</div>
+    </div>
+    <button class="copy-btn" data-copy-target="iban-egp-value">
+        <i class="fas fa-copy"></i> <span class="copy-btn__text" data-i18n="copy">نسخ</span>
+    </button>
+</div>
+
+<div class="contact-item">
+    <div class="contact-item__icon"><i class="fas fa-university"></i></div>
+    <div class="contact-item__info">
+        <div class="contact-item__label" data-i18n="mashreq_usd">Mashreq Bank (USD)</div>
+        <div class="contact-item__value" id="iban-usd-value">EG510046020200000059101715503</div>
+    </div>
+    <button class="copy-btn" data-copy-target="iban-usd-value">
+        <i class="fas fa-copy"></i> <span class="copy-btn__text" data-i18n="copy">نسخ</span>
+    </button>
+</div>
+
+
+            </div>
+        </section>
+
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p class="footer__text" data-i18n="footer">Made with care by Romeo</p>
+        </footer>
+    </div>
+
+    <script>
+const translations = {
+    en: {
+        name: 'Ramadan Gamal Hammad ( Romeo ) <i class="fas fa-circle-check profile__verified"></i>',
+        bio: "Digital creator & tech enthusiast. Building the future, Let's connect!",
+        connect: "Connect",
+        facebook: "Facebook",
+        whatsapp: "WhatsApp",
+        telegram1: "Telegram",
+        instagram: "Instagram",
+        tiktok: "TikTok",
+        twitter: "X (Twitter)",
+        email: "Email",
+        phone: "Phone", 
+        phone2: "Phone 2",
+        payment: "Payment method", 
+        orange_cash: "Orange Cash",
+        instapay: "InstaPay",
+        Binance: "Binance ID",
+        mashreq_egp: "Mashreq Bank (EGP)",
+        mashreq_usd: "Mashreq Bank (USD)",
+        copy: "Copy",
+        copied: "Copied!",
+        footer: "Made with care by Romeo",
+        toggleBtn: "العربية"
+    },
+    ar: {
+        name: 'رمضان جمال حماد ( روميو ) <i class="fas fa-circle-check profile__verified"></i>',
+        bio: "صانع محتوى رقمي ومهتم بالتكنولوجيا. نبني المستقبل، دعنا نتواصل!",
+        connect: "تواصل معي",
+        facebook: "فيسبوك",
+        whatsapp: "واتساب",
+        telegram1: "تيليجرام",
+        instagram: "إنستجرام",
+        tiktok: "تيك توك",
+        twitter: "إكس (تويتر)",
+        email: "البريد الإلكتروني",
+        phone: "هاتف",
+        phone2: "هاتف ٢",
+        payment: "طرق الدفع", 
+        orange_cash: "أورانج كاش",
+        instapay: "إنستاباي",
+        Binance: "معرف بينانس",
+        mashreq_egp: "بنك المشرق (جنيه مصري)",
+        mashreq_usd: "بنك المشرق (دولار أمريكي)",
+        copy: "نسخ",
+        copied: "تم النسخ!",
+        footer: "صُنع بواسطة روميو",
+        toggleBtn: "English"
+    }
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+    let currentLang = 'en';
+    const langToggleBtn = document.getElementById('langToggleBtn');
+
+    // --- 1. كود تغيير اللغة ---
+    if (langToggleBtn) {
+        langToggleBtn.addEventListener('click', () => {
+            currentLang = currentLang === 'en' ? 'ar' : 'en';
+
+            // تغيير اتجاه ولغة الصفحة
+            if (currentLang === 'ar') {
+                document.body.classList.add('rtl');
+                document.documentElement.setAttribute('lang', 'ar');
+                document.documentElement.setAttribute('dir', 'rtl'); 
+            } else {
+                document.body.classList.remove('rtl');
+                document.documentElement.setAttribute('lang', 'en');
+                document.documentElement.setAttribute('dir', 'ltr');
+            }
+
+            // تحديث النصوص اللي واخدة data-i18n
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[currentLang][key]) {
+                    if (key === 'name') {
+                        el.innerHTML = translations[currentLang][key];
+                    } else {
+                        el.textContent = translations[currentLang][key];
+                    }
+                }
+            });
+
+            // تحديث نص زرار اللغة نفسه (صلحنا الكلمة المقطوعة هنا)
+            langToggleBtn.textContent = translations[currentLang].toggleBtn;
+        });
+    }
+
+    // --- 2. كود أزرار النسخ ---
+    document.querySelectorAll('.copy-btn').forEach(function (button) {
+        button.addEventListener('click', function (event) {
+            event.preventDefault();
+            event.stopPropagation(); // عشان لو الزرار جوه لينك، اللينك مايفتحش
+            
+            const targetId = button.getAttribute('data-copy-target');
+            const textElement = document.getElementById(targetId);
+
+            if (!textElement) return;
+
+            navigator.clipboard.writeText(textElement.textContent.trim()).then(function() {
+                const textSpan = button.querySelector('.copy-btn__text');
+                const icon = button.querySelector('i');
+                const originalIconClass = icon.className;
+
+                // إضافة تأثير النجاح (تغيير الأيقونة والنص)
+                button.classList.add('copy-btn--copied');
+                textSpan.textContent = translations[currentLang].copied;
+                icon.className = 'fas fa-check';
+
+                // إرجاع الزرار لحالته الأصلية بعد ثانيتين
+                setTimeout(function () {
+                    button.classList.remove('copy-btn--copied');
+                    textSpan.textContent = translations[currentLang].copy;
+                    icon.className = originalIconClass;
+                }, 2000);
+            });
+        });
+    });
+});
+</script>
+
+   
+</body>
+</html>
